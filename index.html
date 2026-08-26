@@ -92,15 +92,15 @@
     <div style="margin-top: 25px; text-align: left; font-size: 13px; color: #ccc; border-top: 1px solid #333; padding-top: 15px;">
         <strong style="color: #fff; font-size: 14px;">Why 1/5th (20%) Threshold?</strong>
         <ul style="padding-left: 18px; margin-top: 8px; line-height: 1.5;">
-            <li><strong>Avoids Purge Loops:</strong> The common 50% rule can cause games to enter an endless purge-and-recache loop, spiking CPU usage and causing micro-stutters.</li>
-            <li><strong>Better Than Default:</strong> The default 1024 MB value is safe, but rarely triggers on modern 16GB/32GB RAM setups.</li>
+            <li><strong>Avoids Purge Loops:</strong> The common 50% rule for 'Free memory is lower than' threshold can cause games to enter an endless purge-and-recache loop, spiking CPU usage and causing micro-stutters.</li>
+            <li><strong>Better Than Default:</strong> The default 1024 MB value is safe, but rarely triggers standbylist purging on modern 16GB/32GB RAM setups.</li>
             <li><strong>The Sweet Spot:</strong> 1/5th (20%) ensures standby RAM clears before disk-paging occurs without interrupting active game assets when RAM is required.</li>
         </ul>
         <p style="font-size: 12px; color: #888; margin-top: 10px;"><em>Tip: If you prefer a quick value to use without math, <strong>2048 MB</strong> is a safe alternative.</em></p>
         
         <!-- Highlighted Disclaimer Note -->
         <div style="margin-top: 15px; background: rgba(255, 193, 7, 0.1); border-left: 3px solid #ffc107; padding: 10px 12px; border-radius: 4px; font-size: 12px; color: #e0e0e0; line-height: 1.4;">
-            <strong style="color: #ffc107;">Note:</strong> This explanation and formula are based on my personal understanding of how the ISLC standby list operates alongside default value.
+            <strong style="color: #ffc107;">Note:</strong> This explanation and formula are based on my personal understanding of how the ISLC standby list operates alongside default value. There is a possibility that my understanding is wrong.
         </div>
     </div>
 </div>
