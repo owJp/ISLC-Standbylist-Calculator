@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ISLC Threshold Calculator</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            background: #121212; 
+            color: #fff; 
+            text-align: center; 
+            padding: 40px 15px; 
+            margin: 0;
+        }
+        .card { 
+            background: #1e1e1e; 
+            max-width: 420px; 
+            margin: 0 auto; 
+            padding: 25px; 
+            border-radius: 10px; 
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5); 
+            box-sizing: border-box;
+        }
+        input { 
+            padding: 12px; 
+            width: 80%; 
+            margin: 15px 0; 
+            border-radius: 5px; 
+            border: 1px solid #333; 
+            font-size: 16px; 
+            background: #2a2a2a; 
+            color: #fff; 
+            text-align: center; 
+            box-sizing: border-box;
+        }
+        button { 
+            padding: 12px 24px; 
+            background: #007bff; 
+            color: white; 
+            border: none; 
+            border-radius: 5px; 
+            cursor: pointer; 
+            font-size: 16px; 
+            font-weight: bold; 
+            width: 80%; 
+            box-sizing: border-box;
+        }
+        button:hover { 
+            background: #0056b3; 
+        }
+        .result { 
+            margin-top: 20px; 
+            font-size: 15px; 
+            text-align: left; 
+            background: #2a2a2a; 
+            padding: 18px; 
+            border-radius: 5px; 
+        }
+        .result-title { 
+            margin: 0 0 12px 0; 
+            font-size: 15px; 
+            font-weight: bold; 
+            color: #fff; 
+            border-bottom: 1px solid #444; 
+            padding-bottom: 8px; 
+        }
+        .highlight { 
+            color: #00e676; 
+            font-weight: bold; 
+        }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <h2>ISLC Calculator</h2>
+    <p style="color: #aaa; font-size: 14px; margin-top: -10px;">Calculates the optimal 1/5th (20%) RAM threshold</p>
+    
+    <label for="ram"><strong>Enter Installed RAM (GB):</strong></label><br>
+    <input type="number" id="ram" placeholder="e.g. 16" value="16"><br>
+
+    <button type="button" onclick="calculateISLC()">Calculate Settings</button>
+
+    <div class="result" id="output">
+        <div class="result-title">Recommended ISLC Standbylist Configuration</div>
+        <p style="margin: 8px 0;"><strong>The list size is at least:</strong> <span class="highlight">1024 MB</span></p>
+        <p style="margin: 8px 0;"><strong>Free memory is lower than:</strong> <span class="highlight" id="freeMemoryResult">3300 MB</span></p>
+    </div>
+
+    <!-- Explanatory Section -->
+    <div style="margin-top: 25px; text-align: left; font-size: 13px; color: #ccc; border-top: 1px solid #333; padding-top: 15px;">
+        <strong style="color: #fff; font-size: 14px;">Why 1/5th (20%) Threshold?</strong>
+        <ul style="padding-left: 18px; margin-top: 8px; line-height: 1.5;">
+            <li><strong>Avoids Purge Loops:</strong> The common 50% rule can cause games to enter an endless purge-and-recache loop, spiking CPU usage and causing micro-stutters.</li>
+            <li><strong>Better Than Default:</strong> The default 1024 MB value is safe, but rarely triggers on modern 16GB/32GB RAM setups.</li>
+            <li><strong>The Sweet Spot:</strong> 1/5th (20%) ensures standby RAM clears before disk-paging occurs without interrupting active game assets when RAM is required.</li>
+        </ul>
+        <p style="font-size: 12px; color: #888; margin-top: 10px;"><em>Tip: If you prefer a quick value to use without math, <strong>2048 MB</strong> is a safe alternative.</em></p>
+        
+        <!-- Highlighted Disclaimer Note -->
+        <div style="margin-top: 15px; background: rgba(255, 193, 7, 0.1); border-left: 3px solid #ffc107; padding: 10px 12px; border-radius: 4px; font-size: 12px; color: #e0e0e0; line-height: 1.4;">
+            <strong style="color: #ffc107;">Note:</strong> This explanation and formula are based on my personal understanding of how the ISLC standby list operates alongside default value.
+        </div>
+    </div>
+</div>
+
+<script>
+function calculateISLC() {
+    let ramInput = document.getElementById('ram').value;
+    let ram = parseFloat(ramInput);
+    
+    if (isNaN(ram) || ram <= 0) {
+        alert("Please enter a valid RAM size.");
+        return;
+    }
+
+    // Convert total GB to MB, then calculate 1/5th (20%)
+    let totalMB = ram * 1024;
+    let rawResult = totalMB / 5;
+    
+    // Round to nearest 100 for a clean UI entry
+    let roundedResult = Math.round(rawResult / 100) * 100;
+
+    document.getElementById('freeMemoryResult').innerText = roundedResult + " MB";
+}
+</script>
+
+</body>
+</html>
